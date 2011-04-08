@@ -1,0 +1,24 @@
+leveren
+  leveren blikje
+  beprijsde blikjes
+  teruggeven geld 
+  geeft wisselgeld in munten uit beschikbare munten
+  wisselgeld raakt op
+  waarschuwd maar laat toe dat je blikje koopt als wisselgeld niet beschikbaar is
+  
+voorraadbeheer
+  blikjes raken op
+  machine verstuurt email wanneer een voorraad opraakt
+  blikjes bijvullen
+  machine levert niets wanneer voorraad wordt bijgevuld
+
+geld
+  vullen wisselgeld
+  innen inkomsten
+  machine levert niets wanneer geld wordt bijgevuld of inkomsten geind
+  machine verstuurt email wanneer muntjes voorraad opraakt
+
+onderhoud modus
+  test leveren blikje zonder inworp
+  tonen verkochte blikjes
+
