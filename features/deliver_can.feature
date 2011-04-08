@@ -5,5 +5,5 @@ Feature:
   
   Scenario: Deliver for free
     Given a machine with cola and sprite
-    When I choose cola
+    When I choos cola
     Then A can of cola is delivered

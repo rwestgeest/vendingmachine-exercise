@@ -7,14 +7,14 @@ require File.join(File.dirname(__FILE__),'config/vending_machine_version')
 
 
 desc 'Running all unit tests'
-task :default => :features
+task :default => :test
 
 desc "run feature tests"
 Cucumber::Rake::Task.new(:features => :test) do |t|
   t.cucumber_opts = "--format pretty"
 end  
 
-Rake::TestTask.new(:test) do |t| 
+Rake::TestTask.new(:test) do |t|
   t.test_files = FileList['test/**/*test.rb', 'test/*test.rb']
 end
  
