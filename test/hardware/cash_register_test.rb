@@ -146,12 +146,12 @@ module Hardware
       assert register.coin_dropped?(Coin.one_euro), "one euro should be dropped"
     end
     
-    def test_actuating_drop_100_drops_one_euro_coin_in_bin
+    def test_actuating_drop_50_drops_fifty_cents_coin_in_bin
       actuator_collection.stubs(:create_actuator_for).with(:cash_drop_50).yields
       
       register.configure()
       
-      assert register.coin_dropped?(Coin.fifty_cents), "one euro should be dropped"
+      assert register.coin_dropped?(Coin.fifty_cents), "fifty cents should be dropped"
     end
   end
 end
