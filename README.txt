@@ -1,0 +1,1 @@
+vendingmachine exercise in Ruby
