@@ -1,14 +1,12 @@
 require 'rubygems'
-require 'rake/testtask'
+require 'rspec/core/rake_task'
 require File.join(File.dirname(__FILE__),'config/vending_machine_version')
 
 
 desc 'Running all unit tests'
-task :default => :test
+task :default => :rspec
 
-Rake::TestTask.new(:test) do |t| 
-  t.test_files = FileList['test/**/*test.rb', 'test/*test.rb']
-end
+RSpec::Core::RakeTask.new(:rspec)
  
 desc 'Measures test coverage'
 task :coverage do
