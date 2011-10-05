@@ -10,10 +10,10 @@ simulator = Hardware::Simulator.new
 
 bin = Hardware::Bin.new(Adapter.sensors)
 
-drawers = [ Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 0).fill(Hardware::Can.cola, 2, 0), 
-            Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 1).fill(Hardware::Can.fanta, 2, 0),
-            Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 2).fill(Hardware::Can.sprite, 2, 0),
-            Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 3).fill(Hardware::Can.sisi, 2, 0)]
+drawers = [ Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 0), 
+            Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 1),
+            Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 2),
+            Hardware::Drawer.new(bin,Adapter.sensors,Adapter.actuators, 3)]
 
 buttons = [ Hardware::Button.new(Adapter.sensors, 0), 
             Hardware::Button.new(Adapter.sensors, 1), 
@@ -23,7 +23,7 @@ buttons = [ Hardware::Button.new(Adapter.sensors, 0),
 display = Hardware::Display.new(Adapter.actuators) 
 
 cash_register = Hardware::CashRegister.new(bin, Adapter.sensors, Adapter.actuators)
-            
+
 simulator.assemble_hardware_component(:bin, bin)
 simulator.assemble_hardware_components(:drawer, drawers)
 simulator.assemble_hardware_components(:button, buttons)

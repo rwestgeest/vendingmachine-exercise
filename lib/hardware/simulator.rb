@@ -2,8 +2,10 @@ require 'hardware_adapter'
 module Hardware
   class Simulator
    
-    def initialize
+    def initialize(actuators = Adapter.actuators, sensors = Adapter.sensors)
       @components = {}
+      @actuators = actuators
+      @sensors = sensors
     end
     
     def component(component_name)
@@ -24,8 +26,14 @@ module Hardware
     def monitor_changes(component_name, &block)
       component(component_name).monitor_changes(&block)
     end
+
+    def assemble_hardware
+      assemble_hardware_component :bin, Hardware::Bin.new(sensors)
+      assemble_hardware_component :display, Hardware::Display.new(actuators) 
+    end
     
     private 
+    attr_reader :actuators, :sensors
     def component_name(basename, sequence_number)
       "#{basename}_#{sequence_number}".to_sym
     end

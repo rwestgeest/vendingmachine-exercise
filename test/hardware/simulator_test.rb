@@ -18,7 +18,7 @@ module Hardware
     end
   end
   
-  class SimulatorAssembleHardware < Test::Unit::TestCase
+  class SimulatorAssembleHardwareComponents < Test::Unit::TestCase
     attr_reader :sensors, :simulator, :component
     def setup
       @sensors = Adapter::SensorCollection.new
@@ -65,4 +65,27 @@ module Hardware
       assert_equal 'block_given', block_given
     end
   end
+
+  class SimulatorAssembleHardware < Test::Unit::TestCase 
+    attr_reader :actuators, :sensors, :simulator
+    def setup
+      @actuators = Adapter::ActuatorCollection.new
+      @sensors = Adapter::SensorCollection.new
+      @simulator = Simulator.new(actuators, sensors) 
+    end
+
+    def test_assembles_one_bin 
+      simulator.assemble_hardware
+      assert_equal(Bin, simulator.component(:bin).class)
+      assert sensors.list.include?(:bin_entry)
+      assert sensors.list.include?(:bin_fetch_all)
+    end
+
+    def test_assembles_one_display 
+      simulator.assemble_hardware
+      assert_equal(Display, simulator.component(:display).class)
+      assert actuators.list.include?(:display_show)
+    end
+  end
+
 end
