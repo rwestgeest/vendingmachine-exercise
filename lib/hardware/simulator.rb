@@ -28,14 +28,35 @@ module Hardware
     end
 
     def assemble_hardware
-      assemble_hardware_component :bin, Hardware::Bin.new(sensors)
+      assemble_hardware_component :bin, bin
       assemble_hardware_component :display, Hardware::Display.new(actuators) 
+      assemble_hardware_component :cash_register, Hardware::CashRegister.new(bin, sensors, actuators) 
+      assemble_hardware_components :drawer, drawers
+      assemble_hardware_components :button, buttons
     end
-    
+
     private 
     attr_reader :actuators, :sensors
     def component_name(basename, sequence_number)
       "#{basename}_#{sequence_number}".to_sym
+    end
+
+    def drawers
+        @drawers ||= [ Hardware::Drawer.new(bin,sensors,actuators, 0), 
+          Hardware::Drawer.new(bin,sensors,actuators, 1),
+          Hardware::Drawer.new(bin,sensors,actuators, 2),
+          Hardware::Drawer.new(bin,sensors,actuators, 3)]
+    end
+
+    def buttons
+      @buttons ||= [ Hardware::Button.new(sensors, 0), 
+                    Hardware::Button.new(sensors, 1), 
+                    Hardware::Button.new(sensors, 2), 
+                    Hardware::Button.new(sensors, 3)]
+    end
+
+    def bin
+      @bin ||= Hardware::Bin.new(sensors)
     end
   end
 end

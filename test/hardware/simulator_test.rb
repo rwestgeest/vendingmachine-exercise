@@ -86,6 +86,50 @@ module Hardware
       assert_equal(Display, simulator.component(:display).class)
       assert actuators.list.include?(:display_show)
     end
+
+    def test_assembles_4_drawers
+      simulator.assemble_hardware
+      assert_equal(Drawer, simulator.component(:drawer_0).class)
+      assert_equal(Drawer, simulator.component(:drawer_1).class)
+      assert_equal(Drawer, simulator.component(:drawer_2).class)
+      assert_equal(Drawer, simulator.component(:drawer_3).class)
+      assert actuators.list.include?(:drawer_drop_can_0)
+      assert actuators.list.include?(:drawer_drop_can_1)
+      assert actuators.list.include?(:drawer_drop_can_2)
+      assert actuators.list.include?(:drawer_drop_can_3)
+      assert sensors.list.include?(:drawer_drop_can_0)
+      assert sensors.list.include?(:drawer_drop_can_1)
+      assert sensors.list.include?(:drawer_drop_can_2)
+      assert sensors.list.include?(:drawer_drop_can_3)
+      assert sensors.list.include?(:drawer_fill_can_0)
+      assert sensors.list.include?(:drawer_fill_can_1)
+      assert sensors.list.include?(:drawer_fill_can_2)
+      assert sensors.list.include?(:drawer_fill_can_3)
+    end
+    def test_assembles_4_buttons
+      simulator.assemble_hardware
+      assert_equal(Button, simulator.component(:button_0).class)
+      assert_equal(Button, simulator.component(:button_1).class)
+      assert_equal(Button, simulator.component(:button_2).class)
+      assert_equal(Button, simulator.component(:button_3).class)
+      assert sensors.list.include?(:button_press_0)
+      assert sensors.list.include?(:button_press_1)
+      assert sensors.list.include?(:button_press_2)
+      assert sensors.list.include?(:button_press_3)
+    end
+    def test_assembles_cash_register
+      simulator.assemble_hardware
+      assert_equal(CashRegister, simulator.component(:cash_register).class)
+      assert actuators.list.include?(:cash_drop_100)
+      assert actuators.list.include?(:cash_drop_200)
+      assert actuators.list.include?(:cash_drop_50)
+      assert sensors.list.include?(:cash_fill_100)
+      assert sensors.list.include?(:cash_fill_200)
+      assert sensors.list.include?(:cash_fill_50)
+      assert sensors.list.include?(:cash_insert_100)
+      assert sensors.list.include?(:cash_insert_200)
+      assert sensors.list.include?(:cash_insert_50)
+    end
   end
 
 end
