@@ -10,10 +10,18 @@ end
 
 
 Autotest.add_hook :initialize do |autotest|
-    autotest.output = File.open('/dev/null')  
-    autotest.add_mapping(/^test.*\/.*_test.rb$/, true) do |filename, _|
-      filename
+    autotest.add_mapping(%r%^test/.*\.rb$%) do |filename, _|
+        filename
     end
-    
+    autotest.add_mapping(%r%^lib/(.*)\.rb$%) do |_, m|
+        ["test/#{m[1]}_test.rb"]
+    end
+    autotest.add_mapping(%r%^test/test_helper.rb$%) do
+        files_matching %r%^test/.*_test\.rb$%
+    end
 end
 
+
+Autotest.add_discovery do
+  "testunit"
+end
