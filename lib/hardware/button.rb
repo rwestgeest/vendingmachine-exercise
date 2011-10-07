@@ -13,5 +13,6 @@ module Hardware
     def configure
       create_sensor_for(:button_press)
     end 
+
   end
 end

@@ -24,5 +24,6 @@ module Hardware
       create_sensor_for(:bin_fetch_all)
     end
     
+
   end
 end

@@ -6,6 +6,9 @@ module Adapter
     def on_fire_do(&block)
       @on_fire_block = block
     end
+    def remove_fire_listener
+      @on_fire_block = nil
+    end
   end
   
   class NoSuchSensorException < Exception 
@@ -45,6 +48,10 @@ module Adapter
     
     def fire(sensor)
       @sensors[sensor.to_sym].fire
+    end
+
+    def remove_fire_listeners
+      @sensors.collect {|name, sensor| sensor.remove_fire_listener } 
     end
   end
 end

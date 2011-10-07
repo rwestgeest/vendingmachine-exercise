@@ -76,23 +76,23 @@ module Hardware
 
     def test_assembles_one_bin 
       simulator.assemble_hardware
-      assert_equal(Bin, simulator.component(:bin).class)
+      assert_equal(Bin, simulator.bin.class)
       assert sensors.list.include?(:bin_entry)
       assert sensors.list.include?(:bin_fetch_all)
     end
 
     def test_assembles_one_display 
       simulator.assemble_hardware
-      assert_equal(Display, simulator.component(:display).class)
+      assert_equal(Display, simulator.display.class)
       assert actuators.list.include?(:display_show)
     end
 
     def test_assembles_4_drawers
       simulator.assemble_hardware
-      assert_equal(Drawer, simulator.component(:drawer_0).class)
-      assert_equal(Drawer, simulator.component(:drawer_1).class)
-      assert_equal(Drawer, simulator.component(:drawer_2).class)
-      assert_equal(Drawer, simulator.component(:drawer_3).class)
+      assert_equal(Drawer, simulator.drawer(0).class)
+      assert_equal(Drawer, simulator.drawer(1).class)
+      assert_equal(Drawer, simulator.drawer(2).class)
+      assert_equal(Drawer, simulator.drawer(3).class)
       assert actuators.list.include?(:drawer_drop_can_0)
       assert actuators.list.include?(:drawer_drop_can_1)
       assert actuators.list.include?(:drawer_drop_can_2)
@@ -108,15 +108,16 @@ module Hardware
     end
     def test_assembles_4_buttons
       simulator.assemble_hardware
-      assert_equal(Button, simulator.component(:button_0).class)
-      assert_equal(Button, simulator.component(:button_1).class)
-      assert_equal(Button, simulator.component(:button_2).class)
-      assert_equal(Button, simulator.component(:button_3).class)
+      assert_equal(Button, simulator.button(0).class)
+      assert_equal(Button, simulator.button(1).class)
+      assert_equal(Button, simulator.button(2).class)
+      assert_equal(Button, simulator.button(3).class)
       assert sensors.list.include?(:button_press_0)
       assert sensors.list.include?(:button_press_1)
       assert sensors.list.include?(:button_press_2)
       assert sensors.list.include?(:button_press_3)
     end
+
     def test_assembles_cash_register
       simulator.assemble_hardware
       assert_equal(CashRegister, simulator.component(:cash_register).class)
@@ -129,6 +130,59 @@ module Hardware
       assert sensors.list.include?(:cash_insert_100)
       assert sensors.list.include?(:cash_insert_200)
       assert sensors.list.include?(:cash_insert_50)
+    end
+  end
+
+  class SimulatorReset < Test::Unit::TestCase
+    attr_reader :actuators, :sensors, :simulator
+    def setup
+      @actuators = Adapter::ActuatorCollection.new
+      @sensors = Adapter::SensorCollection.new
+      @simulator = Simulator.new(actuators, sensors) 
+      simulator.assemble_hardware
+    end
+
+    def test_empties_drawers
+      simulator.drawer(0).fill(Hardware::Can.cola, 2, 0)
+      simulator.reset
+      assert simulator.drawer(0).empty?
+    end
+
+    def test_empties_cash_register
+      simulator.cash_register.fill(Hardware::Coin.one_euro, 2, 0)
+      simulator.reset
+      assert simulator.cash_register.empty?
+    end
+
+    def test_removes_sensor_listeners
+      bin_entry_called = "was not called"
+      sensors.on(:bin_entry) { bin_entry_called = "was called" }
+      simulator.reset
+      sensors.fire(:bin_entry) 
+
+      assert_equal "was not called",  bin_entry_called
+    end
+
+    def test_fires_start_boot_block
+      boot_block = "was not called"
+      simulator.on_boot { boot_block = "was called" }
+      simulator.reset
+      assert_equal "was called", boot_block
+    end
+  end
+
+  class SimulatorBoot < Test::Unit::TestCase
+    attr_reader :simulator
+    def setup
+      @simulator = Simulator.new(Adapter::ActuatorCollection.null, Adapter::SensorCollection.null)
+      simulator.assemble_hardware
+    end
+
+    def test_fires_start_boot_block
+      boot_block = "was not called"
+      simulator.on_boot { boot_block = "was called" }
+      simulator.boot
+      assert_equal "was called", boot_block
     end
   end
 

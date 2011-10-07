@@ -68,5 +68,13 @@ module Hardware
         drop_coin(Coin.fifty_cents) 
       end
     end
+
+    def empty?
+      @stocks.empty?
+    end
+
+    def reset
+      @stocks.clear
+    end
   end
 end

@@ -10,6 +10,10 @@ module Hardware
       @changed_block = block
     end
     
+    def reset
+      # do noting on reset by default
+    end
+
     protected
     
     def changed
@@ -27,6 +31,7 @@ module Hardware
     def create_actuator_for(event, &block) 
       @actuator_collection.create_actuator_for(event, &block)
     end
+
   end
   
   class SequencedComponent < Component

@@ -33,5 +33,13 @@ module Hardware
         self.drop
       end
     end
+
+    def empty?
+      @stock.empty?
+    end
+
+    def reset
+      @stock.clear
+    end
   end
 end
