@@ -10,7 +10,7 @@ desc 'Running all unit tests'
 task :default => :test
 
 desc "run feature tests"
-Cucumber::Rake::Task.new(:features => :test) do |t|
+Cucumber::Rake::Task.new(:features => :deploy) do |t|
   t.cucumber_opts = "--format pretty"
 end
 
@@ -26,9 +26,16 @@ task :coverage do
    system("#{rcov} --html test/*test.rb")
 end
 
+desc 'run commands'
+task :run_commands => :deploy do
+  require 'lib/command_processor'
+  CommandProcessor.client.test
+end
+
 desc 'deploy code to machine'
-task :deploy do
+task :deploy => :test do
   deploy_code
+  sleep(1)
 end
 
 PACKAGE = 'controlcode.pkg'

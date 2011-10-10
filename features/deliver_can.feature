@@ -3,7 +3,7 @@ Feature:
   I want have a can of soda delivered
   So that i can fix my thirst
   
-  Scenario: Deliver for free
-    Given a machine with cola and sprite
-    When I choos cola
-    Then A can of cola is delivered
+  Scenario: Drop a can (to show how you use the features remotely)
+    Given a machine 
+    When drawer 0 drops a can
+    Then it is received by the bin
