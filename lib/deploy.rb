@@ -1,1 +1,0 @@
-require 'deploy/deployer'

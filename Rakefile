@@ -12,12 +12,12 @@ task :default => :test
 desc "run feature tests"
 Cucumber::Rake::Task.new(:features => :test) do |t|
   t.cucumber_opts = "--format pretty"
-end  
+end
 
 Rake::TestTask.new(:test) do |t|
   t.test_files = FileList['test/**/*test.rb', 'test/*test.rb']
 end
- 
+
 desc 'Measures test coverage'
 task :coverage do
    rm_f "coverage"
@@ -25,6 +25,15 @@ task :coverage do
    rcov = "rcov --aggregate coverage.data"
    system("#{rcov} --html test/*test.rb")
 end
- 
 
- 
+desc 'deploy code to machine'
+task :deploy do
+  deploy_code
+end
+
+PACKAGE = 'controlcode.pkg'
+def deploy_code
+  rm PACKAGE if File.exists? PACKAGE
+  sh "zip -r #{PACKAGE} lib"
+  sh "vmdeploy #{PACKAGE}"
+end
