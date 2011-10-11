@@ -14,6 +14,7 @@ Cucumber::Rake::Task.new(:features => :deploy) do |t|
   t.cucumber_opts = "--format pretty"
 end
 
+desc "Running all unit tests"
 Rake::TestTask.new(:test) do |t|
   t.test_files = FileList['test/**/*test.rb', 'test/*test.rb']
 end
@@ -24,12 +25,6 @@ task :coverage do
    rm_f "coverage.data"
    rcov = "rcov --aggregate coverage.data"
    system("#{rcov} --html test/*test.rb")
-end
-
-desc 'run commands'
-task :run_commands => :deploy do
-  require 'lib/command_processor'
-  CommandProcessor.client.test
 end
 
 desc 'deploy code to machine'
