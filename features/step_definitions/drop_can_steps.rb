@@ -1,5 +1,5 @@
 Given /^a machine$/ do
-  @machine = CommandProcessor.client
+  @machine = Machine.proxy
 end
 
 When /^drawer (\d+) drops a can$/ do |arg1|

@@ -1,9 +1,16 @@
+require 'drb'
 require 'devices'
 require 'device_wrappers'
 module Control
 
-  class RemoteCommands
+  class CommandServer
+    URI = "druby://localhost:14567"
+
     include VMLog
+    def self.start
+      DRb.start_service(URI, self.new)
+    end
+
     def test
       log "works"
     end

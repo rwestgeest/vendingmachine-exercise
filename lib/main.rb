@@ -1,7 +1,6 @@
 require "vmlog"
 require 'devices'
-require 'command_processor'
-require 'control/remote_commands'
+require 'control/command_server'
 require 'control/vending_machine'
 
 module Control
@@ -9,7 +8,7 @@ module Control
   
   def self.main
     # here, you should load your vending machine control software
-    CommandProcessor.run_server(RemoteCommands.new)
+    CommandServer.start
 
     # as an example of using the actuators and sensors (see doc/actuators_and_sensors)
     Devices.display_show(0, 'Choose')
