@@ -14,6 +14,16 @@ Cucumber::Rake::Task.new(:features => :deploy) do |t|
   t.cucumber_opts = "--format pretty"
 end
 
+desc "run wip features"
+Cucumber::Rake::Task.new(:wip => :deploy) do |t|
+  t.cucumber_opts = "--wip --tags @wip --format pretty"
+end
+
+desc "run ci features"
+Cucumber::Rake::Task.new(:ci => :deploy) do |t|
+  t.cucumber_opts = "--tags ~@wip --format pretty"
+end
+
 desc "Running all unit tests"
 Rake::TestTask.new(:test) do |t|
   t.test_files = FileList['test/**/*test.rb', 'test/*test.rb']
