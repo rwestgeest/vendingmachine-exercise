@@ -3,11 +3,10 @@ Given /^a machine$/ do
 end
 
 When /^drawer (\d+) drops a can$/ do |arg1|
-  @machine.clear_bin_events
-  @machine.drop_can_from_drawer(arg1.to_i)
+  pending "step just created - implement it now"
 end
 
 Then /^it is received by the bin$/ do
-  probe("bin should be filled") { @machine.bin_has_received_something }
+  pending "step just created - implement it now"
 end
 
