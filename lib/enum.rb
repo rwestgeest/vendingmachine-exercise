@@ -5,6 +5,9 @@ class Enum
     def inspect
         return "#{self.class.name}.#{@type}"
     end
+    def self.[](value)
+      send(value)
+    end
     def self.method_missing(method)
       begin
         self.send('class_variable_get',"@@#{method}")

@@ -22,6 +22,10 @@ class EnumTest < Test::Unit::TestCase
       assert_same MyEnum.first, MyEnum.first
   end
   
+  def test_enum_values_can_be_accessed_by_strings
+      assert_same MyEnum.first, MyEnum['first']
+  end
+  
   def test_different_enum_values_are_exactly_same
       assert_not_same MyEnum.second, MyEnum.first
   end
